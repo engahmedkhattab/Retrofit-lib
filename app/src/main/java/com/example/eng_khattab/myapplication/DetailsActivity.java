@@ -1,24 +1,13 @@
 package com.example.eng_khattab.myapplication;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.example.eng_khattab.myapplication.MainActivity.itemList;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -28,17 +17,22 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
 
         Intent intent = getIntent();
-        int i = intent.getExtras().getInt("position");
+        final int i = intent.getIntExtra("position",0);
 
+        final TextView name = findViewById(R.id.name);
 
-        TextView name = findViewById(R.id.name);
+        final TextView description = findViewById(R.id.description);
 
-        TextView description = findViewById(R.id.description);
+        ResponseViewModel model = ViewModelProviders.of(this).get(ResponseViewModel.class);
 
+        model.getResponse().observe(this, new Observer<ArrayList<Response>>() {
+            @Override
+            public void onChanged(@Nullable ArrayList<Response> responseList) {
 
+                 name.setText(responseList.get(i).getName());
+                 description.setText(responseList.get(i).getDescription());
 
-        name.setText(itemList.get(i).getName());
-        description.setText(itemList.get(i).getDescription());
-
+            }
+        });
     }
 }

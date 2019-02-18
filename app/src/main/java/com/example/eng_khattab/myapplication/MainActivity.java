@@ -1,54 +1,37 @@
 package com.example.eng_khattab.myapplication;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
-import com.google.gson.Gson;
 import java.util.ArrayList;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-  public static final ArrayList<Response> itemList = new ArrayList<>();
+  private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        ResponseViewModel model = ViewModelProviders.of(this).get(ResponseViewModel.class);
 
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Service.BaseURL)
-                .addConverterFactory(GsonConverterFactory.create(new Gson())).build();
-
-        Service service = retrofit.create(Service.class);
-        service.method().enqueue(new Callback<ArrayList<Response>>() {
+        model.getResponse().observe(this, new Observer<ArrayList<Response>>() {
             @Override
-            public void onResponse(Call<ArrayList<Response>> call, retrofit2.Response<ArrayList<Response>> response) {
-
-                itemList.addAll(response.body());
-
-                ItemRecyclerViewAdapter itemArrayAdapter = new ItemRecyclerViewAdapter(R.layout.item_recycler_view, itemList);
-                RecyclerView recyclerView = findViewById(R.id.recyclerView);
-                recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+            public void onChanged(@Nullable ArrayList<Response> responseList) {
+                ItemRecyclerViewAdapter itemArrayAdapter = new ItemRecyclerViewAdapter(R.layout.item_recycler_view, responseList);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(itemArrayAdapter);
-
-            }
-            @Override
-            public void onFailure(Call<ArrayList<Response>> call, Throwable t) {
-
-                Toast.makeText(MainActivity.this, "failed", Toast.LENGTH_SHORT).show();
             }
         });
-
 
     }
 }

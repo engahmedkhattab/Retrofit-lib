@@ -32,7 +32,6 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         item.setText(itemList.get(i).getName());
     }
 
-
     @Override
     public int getItemCount() {
         return itemList.size();
@@ -55,7 +54,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
             intent.putExtra("position",this.getLayoutPosition());
             v.getContext().startActivity(intent);
 
-
         }
     }
+
 }
