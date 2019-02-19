@@ -1,5 +1,6 @@
-package com.example.eng_khattab.myapplication;
+package com.example.eng_khattab.myapplication.main;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,15 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.example.eng_khattab.myapplication.details.DetailsActivity;
+import com.example.eng_khattab.myapplication.R;
 import java.util.ArrayList;
 
-public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
+public class ResponseRecyclerViewAdapter extends RecyclerView.Adapter<ResponseRecyclerViewAdapter.ViewHolder> {
 
     private int listItemLayout;
     private ArrayList<Response> itemList;
 
-    ItemRecyclerViewAdapter(int listItemLayout, ArrayList<Response> itemList) {
+    ResponseRecyclerViewAdapter(int listItemLayout) {
         this.listItemLayout = listItemLayout;
+    }
+
+    public void addList( ArrayList<Response> itemList){
         this.itemList = itemList;
     }
 
@@ -27,9 +33,19 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, @SuppressLint("RecyclerView") final int i) {
         TextView item = viewHolder.itemName;
         item.setText(itemList.get(i).getName());
+
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(),DetailsActivity.class);
+                intent.putExtra("response", itemList.get(i));
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -37,23 +53,14 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         return itemList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         public TextView itemName;
 
         ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
             itemName = itemView.findViewById(R.id.itemName);
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            Intent intent = new Intent(v.getContext(),DetailsActivity.class);
-            intent.putExtra("position",this.getLayoutPosition());
-            v.getContext().startActivity(intent);
-
         }
     }
 

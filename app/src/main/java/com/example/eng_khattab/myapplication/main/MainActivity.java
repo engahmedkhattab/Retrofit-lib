@@ -1,4 +1,4 @@
-package com.example.eng_khattab.myapplication;
+package com.example.eng_khattab.myapplication.main;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import com.example.eng_khattab.myapplication.R;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-  private RecyclerView recyclerView;
+    private ResponseRecyclerViewAdapter itemArrayAdapter;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,17 +23,18 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        itemArrayAdapter = new ResponseRecyclerViewAdapter(R.layout.item_recycler_view);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        ResponseViewModel model = ViewModelProviders.of(this).get(ResponseViewModel.class);
+        MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
 
         model.getResponse().observe(this, new Observer<ArrayList<Response>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Response> responseList) {
-                ItemRecyclerViewAdapter itemArrayAdapter = new ItemRecyclerViewAdapter(R.layout.item_recycler_view, responseList);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(itemArrayAdapter);
+             itemArrayAdapter.addList(responseList);
+             recyclerView.setAdapter(itemArrayAdapter);
+             itemArrayAdapter.notifyDataSetChanged();
             }
         });
-
     }
 }

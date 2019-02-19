@@ -1,4 +1,4 @@
-package com.example.eng_khattab.myapplication;
+package com.example.eng_khattab.myapplication.main;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

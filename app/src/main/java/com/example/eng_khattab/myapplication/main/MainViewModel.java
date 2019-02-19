@@ -1,8 +1,9 @@
-package com.example.eng_khattab.myapplication;
+package com.example.eng_khattab.myapplication.main;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import com.example.eng_khattab.myapplication.data.Service;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import retrofit2.Call;
@@ -10,7 +11,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ResponseViewModel extends ViewModel {
+public class MainViewModel extends ViewModel {
 
     private MutableLiveData<ArrayList<Response>> responseList;
 
