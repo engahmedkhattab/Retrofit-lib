@@ -26,14 +26,14 @@ public class MainActivity extends AppCompatActivity {
         itemArrayAdapter = new ResponseRecyclerViewAdapter(R.layout.item_recycler_view);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+
         MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
 
         model.getResponse().observe(this, new Observer<ArrayList<Response>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Response> responseList) {
-             itemArrayAdapter.addList(responseList);
-             recyclerView.setAdapter(itemArrayAdapter);
-             itemArrayAdapter.notifyDataSetChanged();
+                itemArrayAdapter.addList(responseList);
+                recyclerView.setAdapter(itemArrayAdapter);
             }
         });
     }
