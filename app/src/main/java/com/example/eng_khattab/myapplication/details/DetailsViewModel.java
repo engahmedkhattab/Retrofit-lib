@@ -4,15 +4,15 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import com.example.eng_khattab.myapplication.data.Service;
-import com.google.gson.Gson;
+import com.example.eng_khattab.myapplication.data.WebServiceClient;
+import com.example.eng_khattab.myapplication.details.pojo.Commit;
 import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailsViewModel extends ViewModel {
 
+    private String name;
     private MutableLiveData<ArrayList<Commit>> commitList;
 
     public LiveData<ArrayList<Commit>> getCommit() {
@@ -25,13 +25,19 @@ public class DetailsViewModel extends ViewModel {
         return commitList;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+
     private void loadCommit() {
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(Service.BaseURLCommit)
-                .addConverterFactory(GsonConverterFactory.create(new Gson())).build();
+        Service service = WebServiceClient.getClient().create(Service.class);
 
-        Service service = retrofit.create(Service.class);
-        Call<ArrayList<Commit>> call = service.methodCommit();
+        Call<ArrayList<Commit>> call = service.methodCommit(getName());
 
         call.enqueue(new Callback<ArrayList<Commit>>() {
             @Override
@@ -47,5 +53,4 @@ public class DetailsViewModel extends ViewModel {
             }
         });
     }
-
 }

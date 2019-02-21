@@ -1,5 +1,5 @@
 
-package com.example.eng_khattab.myapplication.details;
+package com.example.eng_khattab.myapplication.details.pojo;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -1,9 +1,10 @@
-package com.example.eng_khattab.myapplication.main;
+
+package com.example.eng_khattab.myapplication.details.pojo;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Owner {
+public class Committer_ {
 
     @SerializedName("login")
     @Expose

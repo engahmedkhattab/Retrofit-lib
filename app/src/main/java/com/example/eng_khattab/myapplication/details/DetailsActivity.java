@@ -11,13 +11,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import com.example.eng_khattab.myapplication.R;
-import com.example.eng_khattab.myapplication.main.Response;
+import com.example.eng_khattab.myapplication.details.pojo.Commit;
+import com.example.eng_khattab.myapplication.main.pojo.Response;
 import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity {
 
     private CommitRecyclerViewAdapter itemArrayAdapter;
-    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,19 +34,21 @@ public class DetailsActivity extends AppCompatActivity {
         name.setText(response.getName());
         description.setText(response.getDescription());
 
-        recyclerView = findViewById(R.id.recyclerViewDetails);
+        RecyclerView recyclerView = findViewById(R.id.recyclerViewDetails);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         itemArrayAdapter = new CommitRecyclerViewAdapter(R.layout.item_recycler_view);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
+        recyclerView.setAdapter(itemArrayAdapter);
 
         DetailsViewModel model = ViewModelProviders.of(this).get(DetailsViewModel.class);
+        model.setName(response.getName());
 
         model.getCommit().observe(this, new Observer<ArrayList<Commit>>() {
             @Override
             public void onChanged(@Nullable ArrayList<Commit> commitList) {
                 itemArrayAdapter.addList(commitList);
-                recyclerView.setAdapter(itemArrayAdapter);
+                itemArrayAdapter.notifyDataSetChanged();
+
             }
         });
 

@@ -1,7 +1,8 @@
-package com.example.eng_khattab.myapplication.main;
+package com.example.eng_khattab.myapplication.main.pojo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

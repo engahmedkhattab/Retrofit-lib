@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.example.eng_khattab.myapplication.details.DetailsActivity;
 import com.example.eng_khattab.myapplication.R;
+import com.example.eng_khattab.myapplication.main.pojo.Response;
 import java.util.ArrayList;
 
 public class ResponseRecyclerViewAdapter extends RecyclerView.Adapter<ResponseRecyclerViewAdapter.ViewHolder> {
@@ -21,7 +22,7 @@ public class ResponseRecyclerViewAdapter extends RecyclerView.Adapter<ResponseRe
         this.listItemLayout = listItemLayout;
     }
 
-    public void addList( ArrayList<Response> itemList){
+    public void addList(ArrayList<Response> itemList) {
         this.itemList = itemList;
     }
 
@@ -41,7 +42,7 @@ public class ResponseRecyclerViewAdapter extends RecyclerView.Adapter<ResponseRe
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),DetailsActivity.class);
+                Intent intent = new Intent(v.getContext(), DetailsActivity.class);
                 intent.putExtra("response", itemList.get(i));
                 v.getContext().startActivity(intent);
             }
@@ -50,11 +51,14 @@ public class ResponseRecyclerViewAdapter extends RecyclerView.Adapter<ResponseRe
 
     @Override
     public int getItemCount() {
-        return itemList.size();
+        if (itemList == null)
+            return 0;
+        else
+            return itemList.size();
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView itemName;
 

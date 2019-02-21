@@ -1,7 +1,12 @@
 
-package com.example.eng_khattab.myapplication.details;
+package com.example.eng_khattab.myapplication.details.pojo;
 
 import java.util.List;
+
+import com.example.eng_khattab.myapplication.details.pojo.Author_;
+import com.example.eng_khattab.myapplication.details.pojo.Commit;
+import com.example.eng_khattab.myapplication.details.pojo.Committer_;
+import com.example.eng_khattab.myapplication.details.pojo.Parent;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
